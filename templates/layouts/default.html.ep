@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" />
+        <title><%= title %></title>
+    </head>
+    <body><%= content %></body>
+    <script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
+</html>

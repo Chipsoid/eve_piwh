@@ -1,0 +1,99 @@
+% layout 'default';
+% title 'Поиск систем ВХ с планетаркой и бонусами';
+% my $p1 = $self->param('p1') || 0;
+% my $p2 = $self->param('p2') || 0;
+% my $p3 = $self->param('p3') || 0;
+
+<% my $system = begin %>
+    <% my $data = shift; %>
+    <div class="system">
+        <b><a href="http://www.staticmapper.com/index.php?system=<%= $data->{solarSystemName} %>" target="_blank"><%= $data->{solarSystemName} %></a></b> C<%= $data->{wormholeClassID}%>, <%= $data->{typeName} || 'без бонусов' %>,
+        <% if ( $data->{firstStaticName} ) { %><br /> static: <%= $data->{firstStaticName} %> to <%= $data->{firstStaticType} %><% } %><% if ( $data->{secondStaticName} ) { %>,
+        <%= $data->{secondStaticName} %> to WH C<%= $data->{SecondStaticType} %>
+        <% } %>
+    </div>
+<% end %>
+
+<h2>Поиск вормхолл-систем с заданными продуктами с планет</h2>
+<form action="" method="POST" id="form_search_system">
+<!--     <h4>Желаемый тип планет</h4>
+    <label for=""><input type="checkbox" value="" name="" id="" /></label>
+ -->
+    <label for="static">Статик в систему: 
+        <select name="static" id="static">
+            <option value=""></option>
+            <option value="High Sec" <%= $self->param('static') eq 'High Sec' ? 'selected="selected"' : '' %>>High Sec</option>
+            <option value="Low Sec" <%= $self->param('static') eq 'Low Sec' ? 'selected="selected"' : '' %>>Low Sec</option>
+            <option value="Null Sec" <%= $self->param('static') eq 'Null Sec' ? 'selected="selected"' : '' %>>Null Sec</option>
+            <option value="1" <%= $self->param('static') eq '1' ? 'selected="selected"' : '' %>>WH Class 1</option>
+            <option value="2" <%= $self->param('static') eq '2' ? 'selected="selected"' : '' %>>WH Class 2</option>
+            <option value="3" <%= $self->param('static') eq '3' ? 'selected="selected"' : '' %>>WH Class 3</option>
+            <option value="4" <%= $self->param('static') eq '4' ? 'selected="selected"' : '' %>>WH Class 4</option>
+            <option value="5" <%= $self->param('static') eq '5' ? 'selected="selected"' : '' %>>WH Class 5</option>
+            <option value="6" <%= $self->param('static') eq '6' ? 'selected="selected"' : '' %>>WH Class 6</option>
+        </select>
+    </label>
+    <label for="bonus">Тип бонусов: 
+        <select name="bonus" id="bonus">
+            <option value="">Не важно</option>
+            <option value="empty" <%= $self->param('bonus') eq 'empty' ? 'selected="selected"' : '' %>>Без бонусов</option>
+            <option value="30574" <%= $self->param('bonus') eq '30574' ? 'selected="selected"' : '' %>>Magnetar</option>
+            <option value="30575" <%= $self->param('bonus') eq '30575' ? 'selected="selected"' : '' %>>Black Hole</option>
+            <option value="30576" <%= $self->param('bonus') eq '30576' ? 'selected="selected"' : '' %>>Red Giant</option>
+            <option value="30577" <%= $self->param('bonus') eq '30577' ? 'selected="selected"' : '' %>>Pulsar</option>
+            <option value="30669" <%= $self->param('bonus') eq '30669' ? 'selected="selected"' : '' %>>Wolf-Rayet star</option>
+            <option value="30670" <%= $self->param('bonus') eq '30670' ? 'selected="selected"' : '' %>>Cataclismic Variable</option>
+        </select>
+    </label>
+    <label for="min_class">Минимальный класс системы <select name="min_class" id="min_class">
+                                                        <option value="1" <%= $self->param('min_class') == 1 ? 'selected="selected"' : '' %>>C1</option>
+                                                        <option value="2" <%= $self->param('min_class') == 2 ? 'selected="selected"' : '' %>>C2</option>
+                                                        <option value="3" <%= $self->param('min_class') == 3 ? 'selected="selected"' : '' %>>C3</option>
+                                                        <option value="4" <%= $self->param('min_class') == 4 ? 'selected="selected"' : '' %>>C4</option>
+                                                        <option value="5" <%= $self->param('min_class') == 5 ? 'selected="selected"' : '' %>>C5</option>
+                                                        <option value="6" <%= $self->param('min_class') == 6 ? 'selected="selected"' : '' %>>C6</option>
+                                                     </select></label>
+    <label for="max_class">Максимальный класс системы <select name="max_class" id="max_class">
+                                                        <option value="1" <%= $self->param('max_class') == 1 ? 'selected="selected"' : '' %>>C1</option>
+                                                        <option value="2" <%= $self->param('max_class') == 2 ? 'selected="selected"' : '' %>>C2</option>
+                                                        <option value="3" <%= $self->param('max_class') == 3 ? 'selected="selected"' : '' %>>C3</option>
+                                                        <option value="4" <%= $self->param('max_class') == 4 ? 'selected="selected"' : '' %>>C4</option>
+                                                        <option value="5" <%= $self->param('max_class') == 5 ? 'selected="selected"' : '' %>>C5</option>
+                                                        <option value="6" <%= $self->param('max_class') == 6 ? 'selected="selected"' : '' %>>C6</option>
+                                                     </select></label>
+    <label for="p1">Желаемый продукт P1 <select id="p1" name="p1">
+                                            <option value="" <%= ! $p1 ? 'selected="selected"' : ''  %>></option>
+                                            <% foreach my $p ( @{ $products->{p1} } ) { %>
+                                                <option value="<%= $p->{typeID} %>" <%= $p1 == $p->{typeID} ? 'selected="selected"' : '' %> ><%= $p->{typeName} %></option>
+                                            <% } %>
+                                        </select>
+    </label>
+    <label for="p2">Желаемый продукт P2 <select id="p2" name="p2">
+                                            <option value="" <%= ! $p2 ? 'selected="selected"' : ''  %>></option>
+                                            <% foreach my $p ( @{ $products->{p2} } ) { %>
+                                                <option value="<%= $p->{typeID} %>" <%= $p2 == $p->{typeID} ? 'selected="selected"' : '' %>><%= $p->{typeName} %></option>
+                                            <% } %>
+                                        </select></label>
+    <label for="p3">Желаемый продукт P3 <select id="p3" name="p3">
+                                            <option value="" <%= ! $p3 ? 'selected="selected"' : ''  %>></option>
+                                            <% foreach my $p ( @{ $products->{p3} } ) { %>
+                                                <option value="<%= $p->{typeID} %>" <%= $p3 == $p->{typeID} ? 'selected="selected"' : '' %>><%= $p->{typeName} %></option>
+                                            <% } %>
+                                        </select></label>  
+    <input type="submit" value="Найти" />
+</form>
+
+<% if ( $answer->{psystems} ) { %>
+<div id="wormhole_search_result">
+    <h2>Найдено подходящих систем: <%= scalar @{ $answer->{psystems} } %></h2>
+<div class="systems">
+    <% foreach ( @{ $answer->{psystems} } ) { %>
+        <%= $system->($_) %>
+    <% } %>
+</div>
+<% } else { %>
+<h2>Не найдено подходящих систем</h2>
+<% } %>
+</div>
+
+
