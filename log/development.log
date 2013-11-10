@@ -2583,3 +2583,5 @@ Global symbol "$answer" requires explicit package name at template main/index.ht
 [Sun Nov 10 14:51:19 2013] [debug] 200 OK (0.017678s, 56.567/s).
 [Sun Nov 10 14:52:12 2013] [debug] Reading config file "/www/custom/eve_piwh/config/connect.yaml".
 [Sun Nov 10 14:52:12 2013] [debug] register Mojolicious::Plugin::Dbi dsn: dbi:mysql:dbname=eve
+[Sun Nov 10 15:01:15 2013] [debug] Reading config file "/www/custom/eve_piwh/config/connect.yaml".
+[Sun Nov 10 15:01:15 2013] [debug] register Mojolicious::Plugin::Dbi dsn: dbi:mysql:dbname=eve

@@ -7,7 +7,7 @@
 <% my $system = begin %>
     <% my $data = shift; %>
     <div class="system">
-        <b><a href="http://www.staticmapper.com/index.php?system=<%= $data->{solarSystemName} %>" target="_blank"><%= $data->{solarSystemName} %></a></b> C<%= $data->{wormholeClassID}%>, <%= $data->{typeName} || 'без бонусов' %>,
+        <b><a href="http://eveeye.com/?opt=ICPT&system=<%= $data->{solarSystemName} %>" target="_blank"><%= $data->{solarSystemName} %></a></b> C<%= $data->{wormholeClassID}%>, <%= $data->{typeName} || 'без бонусов' %>,
         <% if ( $data->{firstStaticName} ) { %><br /> static: <%= $data->{firstStaticName} %> to <%= $data->{firstStaticType} %><% } %><% if ( $data->{secondStaticName} ) { %>,
         <%= $data->{secondStaticName} %> to WH C<%= $data->{SecondStaticType} %>
         <% } %>
